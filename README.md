@@ -1,5 +1,8 @@
 # AI Travel Planner
 
+Frontend: https://ai-travel-planner-frontend-five.vercel.app
+backend: https://ai-travel-planner-production-669f.up.railway.app/api
+
 A full-stack, AI-powered travel planning web application built with Next.js, Express.js, MongoDB, and the Google Gemini AI.
 This application allows users to generate tailored travel itineraries by simply specifying their destination, duration, budget, and interests. The AI parses these preferences to output a highly structured itinerary with cost estimates and hotel recommendations.
 
