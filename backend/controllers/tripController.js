@@ -149,8 +149,42 @@ const regenerateTripDay = async (req, res) => {
     }
 };
 
+// @desc    Generate a guest trip (no auth, no DB save)
+// @route   POST /api/trips/generate-guest
+// @access  Public
+const generateGuestTrip = async (req, res) => {
+  try {
+    const { destination, days, budgetType, interests } = req.body;
+
+    if (!destination || !days || !budgetType || !interests) {
+      return res.status(400).json({ message: 'Please provide all trip details' });
+    }
+
+    // Call AI Service
+    const aiData = await generateItinerary(destination, days, budgetType, interests);
+
+    // Return directly without saving to DB
+    res.status(200).json({
+      destination,
+      days,
+      budgetType,
+      interests,
+      itinerary: aiData.itinerary,
+      budgetEstimate: aiData.budgetEstimate,
+      currency: aiData.currencyCode,
+      currencySymbol: aiData.currencySymbol,
+      hotels: aiData.hotels,
+      mapLocations: aiData.mapLocations || [],
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to generate trip', error: error.message });
+  }
+};
+
 module.exports = {
   generateTrip,
+  generateGuestTrip,
   getUserTrips,
   getTripById,
   addActivity,
